@@ -1,0 +1,23 @@
+# exclude every other things
+*
+
+# include .gitignore itself
+!/*.gitignore
+
+# include README.md
+!/README.md
+
+# include source files
+!/*.cpp
+!/*.c
+!/*.h
+!/*.hpp
+
+# include /dat
+!/dat
+
+# include data file in /dat
+!/dat/*.txt
+
+# include m file that generate data
+!/dat/*.m
