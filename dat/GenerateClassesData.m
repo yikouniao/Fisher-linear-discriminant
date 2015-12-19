@@ -1,5 +1,6 @@
 % Generate data of two classes in (x, y) mode. Data is normal and is saved in train.txt and test.txt.
 % Author: yikouniao ( github.com/yikouniao )
+% To watch the project, visit github.com/yikouniao/basic-surpervised-classifications
 
 clc
 clear
