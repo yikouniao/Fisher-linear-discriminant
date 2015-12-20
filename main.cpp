@@ -19,7 +19,6 @@ int main(int argc, char** argv)
   }
   vector <Dat> train;
   ReadDat(train, argv[1]);
-
   waitKey(0);
   return 0;
 }
