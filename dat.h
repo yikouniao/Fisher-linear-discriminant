@@ -1,9 +1,6 @@
 #pragma once
-#include <vector>
 
-using namespace std;
-
-enum DatType { TYPE_A, TYPE_B};
+enum DatType { TYPE_UNKNOWN, TYPE_A, TYPE_B};
 
 class Dat {
  private:
@@ -13,9 +10,11 @@ class Dat {
   // objects are divided into two types
   DatType type_;
  public:
+   Dat();
    Dat(int x, int y, DatType type);
    ~Dat();
+   Dat& operator= (const Dat& d);
+   Dat& operator+= (const Dat& d);
+   Dat& operator/= (const int n);
+   DatType& ReadType();
 };
-
-void ReadDat(vector <Dat>& d_vec, const char* f_name);
-static int char2int(char* s);

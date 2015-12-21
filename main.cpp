@@ -2,7 +2,7 @@
 #include <highgui.hpp>
 #include <Eigen/Dense>
 #include <vector>
-#include "dat.h"
+#include "datset.h"
 
 using namespace std;
 using namespace Eigen;
@@ -17,8 +17,7 @@ int main(int argc, char** argv)
   if (argc < 3) {
     return -1;
   }
-  vector <Dat> train;
-  ReadDat(train, argv[1]);
+  DatSet train(argv[1]);
   waitKey(0);
   return 0;
 }
