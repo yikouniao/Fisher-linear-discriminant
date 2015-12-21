@@ -2,7 +2,7 @@
 basic surpervised classifications in C++ on two classes, including Fisher's linear discriminant, perceptron algorithm, W-H algorithm and H-K algorithm.  
 
 Author: [yikouniao](https://github.com/yikouniao)  
-To watch the project, visit https://github.com/yikouniao/basic-surpervised-classifications  
+Project link: https://github.com/yikouniao/basic-surpervised-classifications  
 
 ### Notes
 

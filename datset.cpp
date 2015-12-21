@@ -19,24 +19,24 @@ static void ReadDat(vector <Dat>& d_vec, const char* f_name) {
     cerr << f_name << " could not be opened!\n" << endl;
     exit(1);
   }
-  array<int, 2> dat_xy;
-  array<char, 5> dat_c;
+  array<int, 2> xy;
+  array<char, 5> c;
   while (1) {
-    f_dat.getline(&dat_c[0], 65532, ' ');  // read x_
-    if (dat_c[0] == '#')
+    f_dat.getline(&c[0], 65532, ' ');  // read x_
+    if (c[0] == '#')
       break;
-    dat_xy[0] = char2int(&dat_c[0]);
-    f_dat.getline(&dat_c[0], 65532, ' ');  // read y_
-    dat_xy[1] = char2int(&dat_c[0]);
-    f_dat.getline(&dat_c[0], 65532, '\n');  // read type_
+    xy[0] = char2int(&c[0]);
+    f_dat.getline(&c[0], 65532, ' ');  // read y_
+    xy[1] = char2int(&c[0]);
+    f_dat.getline(&c[0], 65532, '\n');  // read type_
     DatType dat_type;
-    if (dat_c[0] == 'a') {
+    if (c[0] == 'a') {
       dat_type = TYPE_A;
     }
-    else {  // dat_c[0] == 'b'
+    else {  // c[0] == 'b'
       dat_type = TYPE_B;
     }
-    d_vec.push_back(Dat{ dat_xy[0], dat_xy[1], dat_type });
+    d_vec.push_back(Dat{ xy[0], xy[1], dat_type });
   }  // while (1)
 }
 
@@ -54,19 +54,32 @@ static int char2int(char* s) {
 }
 
 void DatSet::DatSetInit() {
-  n1_ = n2_ = 0;
-  m1_ = Dat(0, 0, TYPE_A);
-  m2_ = Dat(0, 0, TYPE_B);
+  // Set all data to 0
+  n.fill(0);
+  for (DatType i = TYPE_ALL; i < TYPE_CNT; ++i) {
+    m[i] = Dat(0, 0, i);
+  }
+  // Calculate sum
   for (auto& e : datset_)
   {
-    if (e.ReadType() == TYPE_A) {
-      n1_ += 1;
-      m1_ += e;
-    } else {  // e.ReadType() == TYPE_B
-      n2_ += 1;
-      m2_ += e;
+    n[TYPE_ALL] += 1;
+    m[TYPE_ALL] += e;
+    n[e.type_] += 1;
+    m[e.type_] += e;
+  }
+  // Calculate mean
+  for (DatType i = TYPE_ALL; i < TYPE_CNT; ++i) {
+    m[i] /= n[i];
+  }
+}
+
+void DatSet::CalSwi(Matrix2i& Sw_i, DatType t) {
+  for (auto& e : datset_) {
+    if (e.type_ == t) {
+      Dat d {e - m[t]};
+      Vector2i v(d.x_, d.y_);
+      Sw_i += v * v.transpose();
+      cout << Sw_i;
     }
   }
-  m1_ /= n1_;
-  m2_ /= n2_;
 }
