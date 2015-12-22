@@ -1,7 +1,6 @@
 #pragma once
 
 #include "dat.h"
-#include <vector>
 #include <Eigen/Dense>
 #include <array>
 
@@ -21,9 +20,10 @@ class DatSet {
  public:
    DatSet(const char* f_name);
    ~DatSet();
-   // calculates The within-class scatter matrix of type i
-   void CalSwi(Matrix2i& Sw_i, DatType t);
+   // Calculate the within-class scatter matrix of type i
+   void CalSwi(Matrix2d& Sw_i, DatType t);
+   // Calculate the within-class scatter matrix Sw
+   void CalSwSum(Matrix2d& Sw);
+   // Calculate inverse matrix of Sw
+   void CalSwSumInv(Matrix2d& Sw_inv);
 };
-
-static void ReadDat(vector <Dat>& d_vec, const char* f_name);
-static int char2int(char* s);
