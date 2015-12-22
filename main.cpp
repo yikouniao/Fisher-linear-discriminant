@@ -1,6 +1,7 @@
+#include "datset.h"
+#include "pic.h"
 #include <opencv.hpp>
 #include <highgui.hpp>
-#include "datset.h"
 
 using namespace std;
 using namespace cv;
@@ -14,6 +15,7 @@ int main(int argc, char** argv)
   Matrix2d Sw_inv;
   train.CalSwSumInv(Sw_inv);
   cout << Sw_inv << '\n';
+  Dat2Pic(train, "train");
   waitKey(0);
   return 0;
 }
