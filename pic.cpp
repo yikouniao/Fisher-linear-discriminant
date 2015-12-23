@@ -1,5 +1,8 @@
 #include "pic.h"
 
+using namespace std;
+using namespace cv;
+
 void Dat2Pic(DatSet& ds, const char* win_name) {
   Mat M(width, height, CV_8UC3, Scalar::all(0));
   for (auto& e : ds.datset_) {

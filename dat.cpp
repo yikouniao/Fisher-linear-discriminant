@@ -4,11 +4,17 @@
 #include <cmath>
 #include <array>
 
+using namespace std;
+using namespace Eigen;
+
 Dat::Dat() : x_(0), y_(0), type_(TYPE_ALL) {}
 
 Dat::Dat(const Dat& d) : x_(d.x_), y_(d.y_), type_(d.type_) {}
 
 Dat::Dat(double x, double y, DatType type) : x_(x), y_(y), type_(type) {}
+
+Dat::Dat(double x, double y, int type)
+    : x_(x), y_(y), type_(static_cast<DatType>(type)) {}
 
 Dat::~Dat() {}
 
@@ -34,18 +40,18 @@ Dat& Dat::operator/= (int n) {
   return *this;
 }
 
+Dat operator+ (const Dat& d1, const Dat& d2) {
+  return Dat(d1.x_ + d2.x_, d1.y_ + d2.y_,
+             (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
+}
+
 Dat operator- (const Dat& d1, const Dat& d2) {
   return Dat(d1.x_ - d2.x_, d1.y_ - d2.y_,
              (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
 }
 
-DatType& operator++ (DatType& t) {
-  t = static_cast<DatType>(t + 1);
-  return t;
-}
-
-DatType operator+ (const DatType& t1, const int i) {
-  return static_cast<DatType>(static_cast<int>(t1) + i);
+Dat::operator Eigen::Vector2d() {
+  return Vector2d(x_, y_);
 }
 
 void ReadDat(vector <Dat>& d_vec, const char* f_name) {
@@ -68,9 +74,10 @@ void ReadDat(vector <Dat>& d_vec, const char* f_name) {
     DatType dat_type;
     if (c[0] == 'a') {
       dat_type = TYPE_A;
-    }
-    else {  // c[0] == 'b'
+    } else if (c[0] == 'b') {
       dat_type = TYPE_B;
+    } else {
+      dat_type = TYPE_ALL;
     }
     d_vec.push_back(Dat{ xy[0], xy[1], dat_type });
   }  // while (1)
@@ -87,4 +94,13 @@ static double char2double(char* s) {
     a += (*s - 48) * pow(10, i++);
   }
   return a;
+}
+
+DatType& operator++ (DatType& t) {
+  t = static_cast<DatType>(t + 1);
+  return t;
+}
+
+DatType operator+ (const DatType& t1, const int i) {
+  return static_cast<DatType>(static_cast<int>(t1) + i);
 }

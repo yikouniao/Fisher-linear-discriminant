@@ -5,11 +5,10 @@
 #include <highgui.hpp>
 #include <vector>
 
-using namespace std;
-using namespace cv;
-
 const int width = 300, height = 300;  // range of pic
-// Correspond to each DatType except TYPE_CNT
-const vector<Vec3b> color{ Vec3b(0, 0, 0), Vec3b(255, 0, 0), Vec3b(0, 255, 0) };
+// Correspond to each DatType
+const std::vector<cv::Vec3b> color{ cv::Vec3b(255, 0, 0),
+                                    cv::Vec3b(0, 255, 0),
+                                    cv::Vec3b(255, 255, 255) };  // TYPE_ALL
 
 void Dat2Pic(DatSet& ds, const char* win_name);

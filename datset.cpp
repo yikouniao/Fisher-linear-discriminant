@@ -1,5 +1,8 @@
 #include "datset.h"
 
+using namespace std;
+using namespace Eigen;
+
 DatSet::DatSet(const char* f_name) {
   ReadDat(datset_, f_name);
   DatSetInit();
@@ -9,8 +12,8 @@ DatSet::~DatSet() {}
 
 void DatSet::DatSetInit() {
   // Set all data to 0
-  n.fill(0);
-  for (DatType i = TYPE_ALL; i < TYPE_CNT; ++i) {
+  for (int i = TYPE_MINUS_1 + 1; i <= TYPE_ALL; ++i) {
+    n[i] = 0;
     m[i] = Dat(0, 0, i);
   }
   // Calculate sum
@@ -22,7 +25,7 @@ void DatSet::DatSetInit() {
     m[e.type_] += e;
   }
   // Calculate mean
-  for (DatType i = TYPE_ALL; i < TYPE_CNT; ++i) {
+  for (int i = TYPE_MINUS_1 + 1; i <= TYPE_ALL; ++i) {
     m[i] /= n[i];
   }
 }
@@ -37,8 +40,12 @@ void DatSet::CalSwi(Matrix2d& Sw_i, DatType t) {
   }
 }
 
+void DatSet::CalSwi(Matrix2d& Sw_i, int t) {
+  CalSwi(Sw_i, static_cast<DatType>(t));
+}
+
 void DatSet::CalSwSum(Matrix2d& Sw) {
-  for (DatType i = TYPE_ALL + 1; i < TYPE_CNT; ++i) {
+  for (int i = TYPE_MINUS_1 + 1; i < TYPE_ALL; ++i) {
     Matrix2d Swi = Matrix2d::Zero();
     CalSwi(Swi, i);
     Sw += Swi;
