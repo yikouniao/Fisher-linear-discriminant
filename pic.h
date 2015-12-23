@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datset.h"
+#include "Fisher/Fisher-datset.h"
 #include <opencv.hpp>
 #include <highgui.hpp>
 #include <vector>
@@ -11,4 +11,4 @@ const std::vector<cv::Vec3b> color{ cv::Vec3b(255, 0, 0),
                                     cv::Vec3b(0, 255, 0),
                                     cv::Vec3b(255, 255, 255) };  // TYPE_ALL
 
-void Dat2Pic(DatSet& ds, const char* win_name);
+void Dat2Pic(FisherDatSet& ds, const char* win_name);

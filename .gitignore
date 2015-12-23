@@ -8,8 +8,8 @@
 !/README.md
 
 # include source files
-!/*.cpp
 !/*.c
+!/*.cpp
 !/*.h
 !/*.hpp
 
@@ -21,3 +21,12 @@
 
 # include m file that generate data
 !/dat/*.m
+
+# include /Fisher
+!/Fisher
+
+# include source file in /Fisher
+!/Fisher/*.c
+!/Fisher/*.cpp
+!/Fisher/*.h
+!/Fisher/*.hpp

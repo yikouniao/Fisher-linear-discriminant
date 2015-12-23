@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Eigen;
 
-void Fisher::Train(DatSet& ds) {
+void Fisher::Train(FisherDatSet& ds) {
   Matrix2d Sw_inv;
   ds.CalSwSumInv(Sw_inv);
   array<Vector2d, n_df> u;
@@ -35,7 +35,7 @@ void Fisher::Out() {
   }
 }
 
-void Fisher::DiscriDat(Dat& x) {
+void Fisher::DiscriDat(FisherDat& x) {
   bool is_type = false;
   for (int i = 0; i < TYPE_ALL; ++i) {
     for (int j = 0; j < TYPE_ALL; ++j) {
@@ -49,7 +49,7 @@ void Fisher::DiscriDat(Dat& x) {
       }  // if (i != j)
     }  // for (int j = 0; j < TYPE_ALL; ++j)
     if (is_type) {
-      x.type_ = static_cast<DatType>(i);
+      x.type_ = static_cast<FisherDatType>(i);
       return;
     }
   }  // for (int i = 0; i < TYPE_ALL; ++i)
@@ -58,25 +58,25 @@ void Fisher::DiscriDat(Dat& x) {
   }
 }
 
-void Fisher::Discri(DatSet& ds) {
+void Fisher::Discri(FisherDatSet& ds) {
   for (auto& e : ds.datset_) {
     DiscriDat(e);
   }
 }
 
-void Fisher::TrainErrRate(DatSet& train) {
+void Fisher::TrainErrRate(FisherDatSet& train) {
   cout << "\nError rate of train data:\n";
-  DatSet result = train;
+  FisherDatSet result = train;
   Discri(result);
   ErrRate(train, result);
 }
 
-void Fisher::TestErrRate(DatSet& test, DatSet& result) {
+void Fisher::TestErrRate(FisherDatSet& test, FisherDatSet& result) {
   cout << "\nError rate of test data:\n";
   ErrRate(test, result);
 }
 
-void Fisher::ErrRate(DatSet& standard, DatSet& comparison) {
+void Fisher::ErrRate(FisherDatSet& standard, FisherDatSet& comparison) {
   array<int, TYPE_ALL_PLUS_1> n_err;
   array<double, TYPE_ALL_PLUS_1> rate_err;
   n_err.fill(0);

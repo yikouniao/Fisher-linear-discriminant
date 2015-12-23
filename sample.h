@@ -1,5 +1,4 @@
 #pragma once
 
-#include "datset.h"
 
-void SamFisher(DatSet& train, DatSet& test, DatSet& result);
+void SamFisher(char* f_train, char* f_test);

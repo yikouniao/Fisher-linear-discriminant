@@ -1,20 +1,20 @@
-#include "datset.h"
+#include "Fisher-datset.h"
 
 using namespace std;
 using namespace Eigen;
 
-DatSet::DatSet(const char* f_name) {
-  ReadDat(datset_, f_name);
-  DatSetInit();
+FisherDatSet::FisherDatSet(const char* f_name) {
+  ReadFisherDat(datset_, f_name);
+  FisherDatSetInit();
 }
 
-DatSet::~DatSet() {}
+FisherDatSet::~FisherDatSet() {}
 
-void DatSet::DatSetInit() {
+void FisherDatSet::FisherDatSetInit() {
   // Set all data to 0
   for (int i = TYPE_MINUS_1 + 1; i <= TYPE_ALL; ++i) {
     n[i] = 0;
-    m[i] = Dat(0, 0, i);
+    m[i] = FisherDat(0, 0, i);
   }
   // Calculate sum
   for (auto& e : datset_)
@@ -30,21 +30,21 @@ void DatSet::DatSetInit() {
   }
 }
 
-void DatSet::CalSwi(Matrix2d& Sw_i, DatType t) {
+void FisherDatSet::CalSwi(Matrix2d& Sw_i, FisherDatType t) {
   for (auto& e : datset_) {
     if (e.type_ == t) {
-      Dat d {e - m[t]};
+      FisherDat d {e - m[t]};
       Vector2d v(d.x_, d.y_);
       Sw_i += v * v.transpose();
     }
   }
 }
 
-void DatSet::CalSwi(Matrix2d& Sw_i, int t) {
-  CalSwi(Sw_i, static_cast<DatType>(t));
+void FisherDatSet::CalSwi(Matrix2d& Sw_i, int t) {
+  CalSwi(Sw_i, static_cast<FisherDatType>(t));
 }
 
-void DatSet::CalSwSum(Matrix2d& Sw) {
+void FisherDatSet::CalSwSum(Matrix2d& Sw) {
   for (int i = TYPE_MINUS_1 + 1; i < TYPE_ALL; ++i) {
     Matrix2d Swi = Matrix2d::Zero();
     CalSwi(Swi, i);
@@ -52,7 +52,7 @@ void DatSet::CalSwSum(Matrix2d& Sw) {
   }
 }
 
-void DatSet::CalSwSumInv(Matrix2d& Sw_inv) {
+void FisherDatSet::CalSwSumInv(Matrix2d& Sw_inv) {
   Matrix2d Sw = Matrix2d::Zero();
   CalSwSum(Sw);
   Sw_inv = Sw.inverse();

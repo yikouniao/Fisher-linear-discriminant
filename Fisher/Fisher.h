@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datset.h"
+#include "Fisher-datset.h"
 
 class Fisher {
  private:
@@ -20,21 +20,21 @@ class Fisher {
  public:
 // Train Fisher's discriminant function
 // ds: input data set
-  void Train(DatSet& ds);
+  void Train(FisherDatSet& ds);
 // std::cout the u_trans and yt
   void Out();
 // Discriminate a single Dat data
 // If don't want test to be covered by result,
 // use DatSet result = test; or Dat result = test; before this function
-  void DiscriDat(Dat& x);
+  void DiscriDat(FisherDat& x);
 // Discriminate a DatSet data
 // If don't want test to be covered by result,
 // use DatSet result = test; before this function
-  void Discri(DatSet& ds);
+  void Discri(FisherDatSet& ds);
 // Calculate the error rate for train data
-  void TrainErrRate(DatSet& ds);
+  void TrainErrRate(FisherDatSet& ds);
 // Calculate the error rate for test data
-  void TestErrRate(DatSet& test, DatSet& result);
+  void TestErrRate(FisherDatSet& test, FisherDatSet& result);
 // Calculate the error rate, assume standard is reference data
-  void ErrRate(DatSet& standard, DatSet& comparison);
+  void ErrRate(FisherDatSet& standard, FisherDatSet& comparison);
 };
