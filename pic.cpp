@@ -6,7 +6,8 @@ using namespace cv;
 void Dat2Pic(FisherDatSet& ds, const char* win_name) {
   Mat M(width, height, CV_8UC3, Scalar::all(0));
   for (auto& e : ds.datset_) {
-    M.at<Vec3b>(static_cast<int>(e.x_), static_cast<int>(e.y_)) = color[e.type_];
+    M.at<Vec3b>(static_cast<int>(e.xy_[0]),
+                static_cast<int>(e.xy_[1])) = color[e.type_];
   }
   namedWindow(win_name);
   imshow(win_name, M);

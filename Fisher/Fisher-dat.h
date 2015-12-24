@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../dat.h"
 #include <vector>
 #include <Eigen/Dense>
 
-enum FisherDatType { TYPE_MINUS_1 = -1, TYPE_A, TYPE_B, TYPE_ALL, TYPE_ALL_PLUS_1};
+enum FisherDatType { TYPE_MINUS_1 = -1, TYPE_A, TYPE_B, TYPE_C, TYPE_ALL, TYPE_ALL_PLUS_1};
 
 // minimum number of discriminant function
 const int n_df{(TYPE_ALL - 1) * TYPE_ALL / 2};
@@ -11,12 +12,9 @@ const int n_df{(TYPE_ALL - 1) * TYPE_ALL / 2};
 FisherDatType& operator++ (FisherDatType& t);
 FisherDatType operator+ (const FisherDatType& t1, const int i);
 
-class FisherDat {
+class FisherDat : public Dat {
  public:
-  // two-dimensional data of the objects
-  double x_;
-  double y_;
-  // objects are divided into two types
+  // objects are divided into types
   FisherDatType type_;
 
   FisherDat();

@@ -7,20 +7,20 @@
 using namespace std;
 using namespace Eigen;
 
-FisherDat::FisherDat() : x_(0), y_(0), type_(TYPE_ALL) {}
+FisherDat::FisherDat() : Dat(0, 0), type_(TYPE_ALL) {}
 
-FisherDat::FisherDat(const FisherDat& d) : x_(d.x_), y_(d.y_), type_(d.type_) {}
+FisherDat::FisherDat(const FisherDat& d) : Dat(d.xy_), type_(d.type_) {}
 
-FisherDat::FisherDat(double x, double y, FisherDatType type) : x_(x), y_(y), type_(type) {}
+FisherDat::FisherDat(double x, double y, FisherDatType type)
+    : Dat(x, y), type_(type) {}
 
 FisherDat::FisherDat(double x, double y, int type)
-    : x_(x), y_(y), type_(static_cast<FisherDatType>(type)) {}
+    : Dat(x, y), type_(static_cast<FisherDatType>(type)) {}
 
 FisherDat::~FisherDat() {}
 
 FisherDat& FisherDat::operator= (const FisherDat& d) {
-  x_ = d.x_;
-  y_ = d.y_;
+  xy_ = d.xy_;
   type_ = d.type_;
   return *this;
 }
@@ -29,29 +29,29 @@ FisherDat& FisherDat::operator+= (const FisherDat& d) {
   if (d.type_ != type_) {
     type_ = TYPE_ALL;
   }
-  x_ += d.x_;
-  y_ += d.y_;
+  xy_[0] += d.xy_[0];
+  xy_[1] += d.xy_[1];
   return *this;
 }
 
 FisherDat& FisherDat::operator/= (int n) {
-  x_ /= n;
-  y_ /= n;
+  xy_[0] /= n;
+  xy_[1] /= n;
   return *this;
 }
 
 FisherDat operator+ (const FisherDat& d1, const FisherDat& d2) {
-  return FisherDat(d1.x_ + d2.x_, d1.y_ + d2.y_,
-             (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
+  return FisherDat(d1.xy_[0] + d2.xy_[0], d1.xy_[1] + d2.xy_[1],
+                   (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
 }
 
 FisherDat operator- (const FisherDat& d1, const FisherDat& d2) {
-  return FisherDat(d1.x_ - d2.x_, d1.y_ - d2.y_,
-             (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
+  return FisherDat(d1.xy_[0] - d2.xy_[0], d1.xy_[1] - d2.xy_[1],
+                   (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
 }
 
 FisherDat::operator Eigen::Vector2d() {
-  return Vector2d(x_, y_);
+  return Vector2d(xy_[0], xy_[1]);
 }
 
 void ReadFisherDat(vector <FisherDat>& d_vec, const char* f_name) {
@@ -64,11 +64,11 @@ void ReadFisherDat(vector <FisherDat>& d_vec, const char* f_name) {
   array<double, 2> xy;
   array<char, 5> c;
   while (1) {
-    f_dat.getline(&c[0], 65532, ' ');  // read x_
+    f_dat.getline(&c[0], 65532, '\t');  // read x_
     if (c[0] == '#')
       break;
     xy[0] = char2double(&c[0]);
-    f_dat.getline(&c[0], 65532, ' ');  // read y_
+    f_dat.getline(&c[0], 65532, '\t');  // read y_
     xy[1] = char2double(&c[0]);
     f_dat.getline(&c[0], 65532, '\n');  // read type_
     FisherDatType dat_type;
@@ -76,7 +76,10 @@ void ReadFisherDat(vector <FisherDat>& d_vec, const char* f_name) {
       dat_type = TYPE_A;
     } else if (c[0] == 'b') {
       dat_type = TYPE_B;
-    } else {
+    } else if (c[0] == 'c') {
+      dat_type = TYPE_C;
+    }
+    else {
       dat_type = TYPE_ALL;
     }
     d_vec.push_back(FisherDat{ xy[0], xy[1], dat_type });

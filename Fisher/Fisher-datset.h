@@ -8,7 +8,7 @@
 
 class FisherDatSet {
  public:
-   std::vector <FisherDat> datset_;
+  std::vector <FisherDat> datset_;
   // n[TYPE_A, TYPE_B...] are quantities of each type
   // n[TYPE_ALL] is quantity of all data
   std::array <int, TYPE_ALL_PLUS_1> n;
@@ -19,10 +19,10 @@ class FisherDatSet {
   FisherDatSet(const char* f_name);
   ~FisherDatSet();
   // Calculate the within-class scatter matrix of type i
-  void CalSwi(Eigen::Matrix2d& Sw_i, FisherDatType t);
-  void CalSwi(Eigen::Matrix2d& Sw_i, int t);
+  void CalSwi(Eigen::Matrix2d& Sw_i, FisherDatType t) const;
+  void CalSwi(Eigen::Matrix2d& Sw_i, int t) const;
   // Calculate the within-class scatter matrix Sw
-  void CalSwSum(Eigen::Matrix2d& Sw);
+  void CalSwSum(Eigen::Matrix2d& Sw) const;
   // Calculate inverse matrix of Sw
-  void CalSwSumInv(Eigen::Matrix2d& Sw_inv);
+  void CalSwSumInv(Eigen::Matrix2d& Sw_inv) const;
 };

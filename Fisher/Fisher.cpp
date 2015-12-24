@@ -91,6 +91,7 @@ void Fisher::ErrRate(FisherDatSet& standard, FisherDatSet& comparison) {
   for (int i = 0; i < TYPE_ALL_PLUS_1; ++i) {
     rate_err[i] = static_cast<double>(n_err[i]) / standard.n[i];
     (i == TYPE_ALL) ? cout << "all:\t" : cout << i + 1 << ":\t";
-    cout << n_err[i] << "/" << standard.n[i] << "\t\t" << rate_err[i] << "\n";
+    cout << n_err[i] << "/" << standard.n[i] << "\t\t";
+    cout << rate_err[i] * 100 << "%\n";
   }
 }

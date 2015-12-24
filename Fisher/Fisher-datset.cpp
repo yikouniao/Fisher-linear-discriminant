@@ -30,21 +30,21 @@ void FisherDatSet::FisherDatSetInit() {
   }
 }
 
-void FisherDatSet::CalSwi(Matrix2d& Sw_i, FisherDatType t) {
+void FisherDatSet::CalSwi(Matrix2d& Sw_i, FisherDatType t) const {
   for (auto& e : datset_) {
     if (e.type_ == t) {
       FisherDat d {e - m[t]};
-      Vector2d v(d.x_, d.y_);
+      Vector2d v(d.xy_[0], d.xy_[1]);
       Sw_i += v * v.transpose();
     }
   }
 }
 
-void FisherDatSet::CalSwi(Matrix2d& Sw_i, int t) {
+void FisherDatSet::CalSwi(Matrix2d& Sw_i, int t) const {
   CalSwi(Sw_i, static_cast<FisherDatType>(t));
 }
 
-void FisherDatSet::CalSwSum(Matrix2d& Sw) {
+void FisherDatSet::CalSwSum(Matrix2d& Sw) const {
   for (int i = TYPE_MINUS_1 + 1; i < TYPE_ALL; ++i) {
     Matrix2d Swi = Matrix2d::Zero();
     CalSwi(Swi, i);
@@ -52,7 +52,7 @@ void FisherDatSet::CalSwSum(Matrix2d& Sw) {
   }
 }
 
-void FisherDatSet::CalSwSumInv(Matrix2d& Sw_inv) {
+void FisherDatSet::CalSwSumInv(Matrix2d& Sw_inv) const {
   Matrix2d Sw = Matrix2d::Zero();
   CalSwSum(Sw);
   Sw_inv = Sw.inverse();
