@@ -2,7 +2,9 @@
 
 #include "Fisher-datset.h"
 
-class Fisher {
+namespace Fisher {
+// parameters of discriminant function
+class D_F {
  private:
 // u_trans: the matrix transpose of u
 // yt: threshold for dividing patterns
@@ -20,21 +22,22 @@ class Fisher {
  public:
 // Train Fisher's discriminant function
 // ds: input data set
-  void Train(FisherDatSet& ds);
+  void Train(DatSet& ds);
 // std::cout the u_trans and yt
   void Out();
 // Discriminate a single Dat data
 // If don't want test to be covered by result,
 // use DatSet result = test; or Dat result = test; before this function
-  void DiscriDat(FisherDat& x);
+  void DiscriDat(Dat& x);
 // Discriminate a DatSet data
 // If don't want test to be covered by result,
 // use DatSet result = test; before this function
-  void Discri(FisherDatSet& ds);
+  void Discri(DatSet& ds);
 // Calculate the error rate for train data
-  void TrainErrRate(FisherDatSet& ds);
+  void TrainErrRate(DatSet& ds);
 // Calculate the error rate for test data
-  void TestErrRate(FisherDatSet& test, FisherDatSet& result);
+  void TestErrRate(DatSet& test, DatSet& result);
 // Calculate the error rate, assume standard is reference data
-  void ErrRate(FisherDatSet& standard, FisherDatSet& comparison);
+  void ErrRate(DatSet& standard, DatSet& comparison);
 };
+}  // namespace Fisher

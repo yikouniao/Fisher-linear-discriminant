@@ -12,4 +12,6 @@ const std::vector<cv::Vec3b> color{ cv::Vec3b(255, 0, 0),
                                     cv::Vec3b(0, 0, 255),
                                     cv::Vec3b(255, 255, 255) };  // TYPE_ALL
 
-void Dat2Pic(FisherDatSet& ds, const char* win_name);
+namespace Fisher {
+void Dat2Pic(Fisher::DatSet& ds, const char* win_name);
+}  // namespace Fisher

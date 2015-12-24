@@ -7,25 +7,34 @@
 using namespace std;
 using namespace Eigen;
 
-FisherDat::FisherDat() : Dat(0, 0), type_(TYPE_ALL) {}
+namespace Fisher {
+Dat::Dat() : type_(TYPE_ALL) {
+  xy_[0] = 0;
+  xy_[1] = 0;
+}
 
-FisherDat::FisherDat(const FisherDat& d) : Dat(d.xy_), type_(d.type_) {}
+Dat::Dat(const Dat& d) : xy_(d.xy_), type_(d.type_) {}
 
-FisherDat::FisherDat(double x, double y, FisherDatType type)
-    : Dat(x, y), type_(type) {}
+Dat::Dat(double x, double y, DatType type) : type_(type) {
+  xy_[0] = x;
+  xy_[1] = y;
+}
 
-FisherDat::FisherDat(double x, double y, int type)
-    : Dat(x, y), type_(static_cast<FisherDatType>(type)) {}
+Dat::Dat(double x, double y, int type)
+    : type_(static_cast<DatType>(type)) {
+  xy_[0] = x;
+  xy_[1] = y;
+}
 
-FisherDat::~FisherDat() {}
+Dat::~Dat() {}
 
-FisherDat& FisherDat::operator= (const FisherDat& d) {
+Dat& Dat::operator= (const Dat& d) {
   xy_ = d.xy_;
   type_ = d.type_;
   return *this;
 }
 
-FisherDat& FisherDat::operator+= (const FisherDat& d) {
+Dat& Dat::operator+= (const Dat& d) {
   if (d.type_ != type_) {
     type_ = TYPE_ALL;
   }
@@ -34,27 +43,27 @@ FisherDat& FisherDat::operator+= (const FisherDat& d) {
   return *this;
 }
 
-FisherDat& FisherDat::operator/= (int n) {
+Dat& Dat::operator/= (int n) {
   xy_[0] /= n;
   xy_[1] /= n;
   return *this;
 }
 
-FisherDat operator+ (const FisherDat& d1, const FisherDat& d2) {
-  return FisherDat(d1.xy_[0] + d2.xy_[0], d1.xy_[1] + d2.xy_[1],
-                   (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
+Dat operator+ (const Dat& d1, const Dat& d2) {
+  return Dat(d1.xy_[0] + d2.xy_[0], d1.xy_[1] + d2.xy_[1],
+             (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
 }
 
-FisherDat operator- (const FisherDat& d1, const FisherDat& d2) {
-  return FisherDat(d1.xy_[0] - d2.xy_[0], d1.xy_[1] - d2.xy_[1],
-                   (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
+Dat operator- (const Dat& d1, const Dat& d2) {
+  return Dat(d1.xy_[0] - d2.xy_[0], d1.xy_[1] - d2.xy_[1],
+             (d1.type_ == d2.type_) ? d1.type_ : TYPE_ALL);
 }
 
-FisherDat::operator Eigen::Vector2d() {
+Dat::operator Eigen::Vector2d() {
   return Vector2d(xy_[0], xy_[1]);
 }
 
-void ReadFisherDat(vector <FisherDat>& d_vec, const char* f_name) {
+void ReadDat(vector <Dat>& d_vec, const char* f_name) {
   ifstream f_dat(f_name);
   if (!f_dat)
   {
@@ -71,18 +80,17 @@ void ReadFisherDat(vector <FisherDat>& d_vec, const char* f_name) {
     f_dat.getline(&c[0], 65532, '\t');  // read y_
     xy[1] = char2double(&c[0]);
     f_dat.getline(&c[0], 65532, '\n');  // read type_
-    FisherDatType dat_type;
+    DatType dat_type;
     if (c[0] == 'a') {
       dat_type = TYPE_A;
     } else if (c[0] == 'b') {
       dat_type = TYPE_B;
     } else if (c[0] == 'c') {
       dat_type = TYPE_C;
-    }
-    else {
+    } else {
       dat_type = TYPE_ALL;
     }
-    d_vec.push_back(FisherDat{ xy[0], xy[1], dat_type });
+    d_vec.push_back(Dat{ xy[0], xy[1], dat_type });
   }  // while (1)
 }
 
@@ -99,11 +107,12 @@ static double char2double(char* s) {
   return a;
 }
 
-FisherDatType& operator++ (FisherDatType& t) {
-  t = static_cast<FisherDatType>(t + 1);
+DatType& operator++ (DatType& t) {
+  t = static_cast<DatType>(t + 1);
   return t;
 }
 
-FisherDatType operator+ (const FisherDatType& t1, const int i) {
-  return static_cast<FisherDatType>(static_cast<int>(t1) + i);
+DatType operator+ (const DatType& t1, const int i) {
+  return static_cast<DatType>(static_cast<int>(t1) + i);
 }
+}  // namespace Fisher

@@ -3,7 +3,8 @@
 using namespace std;
 using namespace cv;
 
-void Dat2Pic(FisherDatSet& ds, const char* win_name) {
+namespace Fisher {
+void Dat2Pic(DatSet& ds, const char* win_name) {
   Mat M(width, height, CV_8UC3, Scalar::all(0));
   for (auto& e : ds.datset_) {
     M.at<Vec3b>(static_cast<int>(e.xy_[0]),
@@ -12,3 +13,4 @@ void Dat2Pic(FisherDatSet& ds, const char* win_name) {
   namedWindow(win_name);
   imshow(win_name, M);
 }
+}  // namespace Fisher

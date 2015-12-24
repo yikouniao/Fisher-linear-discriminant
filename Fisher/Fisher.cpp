@@ -4,7 +4,8 @@
 using namespace std;
 using namespace Eigen;
 
-void Fisher::Train(FisherDatSet& ds) {
+namespace Fisher {
+void D_F::Train(DatSet& ds) {
   Matrix2d Sw_inv;
   ds.CalSwSumInv(Sw_inv);
   array<Vector2d, n_df> u;
@@ -24,7 +25,7 @@ void Fisher::Train(FisherDatSet& ds) {
   }
 }
 
-void Fisher::Out() {
+void D_F::Out() {
   cout << "\nFisher's discriminant parameter:\n";
   for (int i = 0; i < TYPE_ALL; ++i) {
     for (int j = i + 1; j < TYPE_ALL; ++j) {
@@ -35,7 +36,7 @@ void Fisher::Out() {
   }
 }
 
-void Fisher::DiscriDat(FisherDat& x) {
+void D_F::DiscriDat(Dat& x) {
   bool is_type = false;
   for (int i = 0; i < TYPE_ALL; ++i) {
     for (int j = 0; j < TYPE_ALL; ++j) {
@@ -49,7 +50,7 @@ void Fisher::DiscriDat(FisherDat& x) {
       }  // if (i != j)
     }  // for (int j = 0; j < TYPE_ALL; ++j)
     if (is_type) {
-      x.type_ = static_cast<FisherDatType>(i);
+      x.type_ = static_cast<DatType>(i);
       return;
     }
   }  // for (int i = 0; i < TYPE_ALL; ++i)
@@ -58,25 +59,25 @@ void Fisher::DiscriDat(FisherDat& x) {
   }
 }
 
-void Fisher::Discri(FisherDatSet& ds) {
+void D_F::Discri(DatSet& ds) {
   for (auto& e : ds.datset_) {
     DiscriDat(e);
   }
 }
 
-void Fisher::TrainErrRate(FisherDatSet& train) {
+void D_F::TrainErrRate(DatSet& train) {
   cout << "\nError rate of train data:\n";
-  FisherDatSet result = train;
+  DatSet result = train;
   Discri(result);
   ErrRate(train, result);
 }
 
-void Fisher::TestErrRate(FisherDatSet& test, FisherDatSet& result) {
+void D_F::TestErrRate(DatSet& test, DatSet& result) {
   cout << "\nError rate of test data:\n";
   ErrRate(test, result);
 }
 
-void Fisher::ErrRate(FisherDatSet& standard, FisherDatSet& comparison) {
+void D_F::ErrRate(DatSet& standard, DatSet& comparison) {
   array<int, TYPE_ALL_PLUS_1> n_err;
   array<double, TYPE_ALL_PLUS_1> rate_err;
   n_err.fill(0);
@@ -95,3 +96,4 @@ void Fisher::ErrRate(FisherDatSet& standard, FisherDatSet& comparison) {
     cout << rate_err[i] * 100 << "%\n";
   }
 }
+}  // namespace Fisher

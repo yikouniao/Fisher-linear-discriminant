@@ -6,23 +6,25 @@
 #include <vector>
 #include <string>
 
-class FisherDatSet {
+namespace Fisher {
+class DatSet {
  public:
-  std::vector <FisherDat> datset_;
+  std::vector <Dat> datset_;
   // n[TYPE_A, TYPE_B...] are quantities of each type
   // n[TYPE_ALL] is quantity of all data
   std::array <int, TYPE_ALL_PLUS_1> n;
   // m[...] are mean vectors
   // the format of the array m is the same as n
-  std::array <FisherDat, TYPE_ALL_PLUS_1> m;
-  void FisherDatSetInit();  // initializes n and m
-  FisherDatSet(const char* f_name);
-  ~FisherDatSet();
+  std::array <Dat, TYPE_ALL_PLUS_1> m;
+  void DatSetInit();  // initializes n and m
+  DatSet(const char* f_name);
+  ~DatSet();
   // Calculate the within-class scatter matrix of type i
-  void CalSwi(Eigen::Matrix2d& Sw_i, FisherDatType t) const;
+  void CalSwi(Eigen::Matrix2d& Sw_i, DatType t) const;
   void CalSwi(Eigen::Matrix2d& Sw_i, int t) const;
   // Calculate the within-class scatter matrix Sw
   void CalSwSum(Eigen::Matrix2d& Sw) const;
   // Calculate inverse matrix of Sw
   void CalSwSumInv(Eigen::Matrix2d& Sw_inv) const;
 };
+}  // namespace Fisher
