@@ -25,3 +25,8 @@ basic-surpervised-classifications.exe dat/train.txt dat/test.txt dat/train-seper
 
 #### Perceptron approach
  * The data for training is in `dat/train-seperated.txt`, and for testing, in `dat/test-seperated.txt`.
+ * If you want to modify the names and quantities of the classes, besides modifying `dat/*.txt`, you should:
+ * Modify `enum Percp::DatType` in `perception/perception-dat.h`;
+ * Modify the characters for recognizing types in `void Percp::InitDatSet(...)` in `perception/perception.cpp` according to the format of `dat/*.txt`;
+ * Modify `color` in `pic.h` accordingly;
+ * Use `void Percp::perception.SetP(double p)` to set the step size.

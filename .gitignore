@@ -30,3 +30,12 @@
 !/Fisher/*.cpp
 !/Fisher/*.h
 !/Fisher/*.hpp
+
+# include /perception
+!/perception
+
+# include source file in /perception
+!/perception/*.c
+!/perception/*.cpp
+!/perception/*.h
+!/perception/*.hpp

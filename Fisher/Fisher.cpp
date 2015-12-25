@@ -1,10 +1,10 @@
 #include "Fisher.h"
 #include <iostream>
 
+namespace Fisher {
 using namespace std;
 using namespace Eigen;
 
-namespace Fisher {
 void D_F::Train(DatSet& ds) {
   Matrix2d Sw_inv;
   ds.CalSwSumInv(Sw_inv);
@@ -66,14 +66,14 @@ void D_F::Discri(DatSet& ds) {
 }
 
 void D_F::TrainErrRate(DatSet& train) {
-  cout << "\nError rate of train data:\n";
+  cout << "\nError rate of train data for Fisher:\n";
   DatSet result = train;
   Discri(result);
   ErrRate(train, result);
 }
 
 void D_F::TestErrRate(DatSet& test, DatSet& result) {
-  cout << "\nError rate of test data:\n";
+  cout << "\nError rate of test data for Fisher:\n";
   ErrRate(test, result);
 }
 

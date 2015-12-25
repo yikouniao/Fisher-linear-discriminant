@@ -1,7 +1,6 @@
 #pragma once
-
-#include "../dat.h"
 #include <vector>
+#include <array>
 #include <Eigen/Dense>
 
 namespace Fisher {

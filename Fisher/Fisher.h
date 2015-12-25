@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Fisher-datset.h"
 
 namespace Fisher {

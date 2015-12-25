@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Fisher-dat.h"
 #include <Eigen/Dense>
 #include <array>

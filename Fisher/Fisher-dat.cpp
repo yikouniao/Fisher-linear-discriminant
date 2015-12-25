@@ -4,10 +4,10 @@
 #include <cmath>
 #include <array>
 
+namespace Fisher {
 using namespace std;
 using namespace Eigen;
 
-namespace Fisher {
 Dat::Dat() : type_(TYPE_ALL) {
   xy_[0] = 0;
   xy_[1] = 0;

@@ -1,9 +1,9 @@
 #include "Fisher-datset.h"
 
+namespace Fisher {
 using namespace std;
 using namespace Eigen;
 
-namespace Fisher {
 DatSet::DatSet(const char* f_name) {
   ReadDat(datset_, f_name);
   DatSetInit();

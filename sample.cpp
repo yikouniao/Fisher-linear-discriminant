@@ -18,3 +18,21 @@ void SamFisher(char* f_train, char* f_test) {
   Dat2Pic(result, "Fisher result");
   fisher.TestErrRate(test, result);
 }
+
+void SamPercp(char* f_train, char* f_test) {
+  using namespace Percp;
+  DatSet train;
+  InitDatSet(train, f_train);
+  Dat2Pic(train, "perception train");
+  D_F perception;
+  perception.SetP(2000);
+  perception.Train(train);
+  perception.Out();
+  DatSet test;
+  InitDatSet(test, f_test);
+  Dat2Pic(test, "perception test");
+  DatSet result = test;
+  perception.Test(result);
+  Dat2Pic(result, "perception result");
+  perception.ErrRate(test, result);
+}
