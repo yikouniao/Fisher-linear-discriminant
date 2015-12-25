@@ -1,5 +1,5 @@
 # basic-surpervised-classifications
-Basic surpervised classifications in C++, including Fisher's linear discriminant, perceptron approach, W-H algorithm and H-K algorithm.  
+Basic surpervised classifications in C++, including Fisher's linear discriminant, perceptron approach and H-K algorithm.  
 
 Author: [yikouniao](https://github.com/yikouniao)  
 Project link: https://github.com/yikouniao/basic-surpervised-classifications  
@@ -13,7 +13,7 @@ Project link: https://github.com/yikouniao/basic-surpervised-classifications
  * You can also modify the parameters in `*.m` codes to generate other data.
  * The arguments for `int main(int argc, char** argv)` are:
 ```cpp
-basic-surpervised-classifications.exe dat/train.txt dat/test.txt dat/train-seperated.txt dat/test-seperated.txt
+dat/train.txt dat/test.txt dat/train-seperated.txt dat/test-seperated.txt dat/trainHK.txt dat/testHK.txt
 ```
 
 #### Fisher's linear discriminant
@@ -29,4 +29,10 @@ basic-surpervised-classifications.exe dat/train.txt dat/test.txt dat/train-seper
  * Modify `enum Percp::DatType` in `perception/perception-dat.h`;
  * Modify the characters for recognizing types in `void Percp::InitDatSet(...)` in `perception/perception.cpp` according to the format of `dat/*.txt`;
  * Modify `color` in `pic.h` accordingly;
- * Use `void Percp::perception.SetP(double p)` to set the step size.
+ * Use `void Percp::SetP(...)` to set the step size.
+
+#### H-K algorithm
+ * The data for training is in `dat/trainHK.txt`, and for testing, in `dat/testHK.txt`.
+ * In this part, data is divided into only two patterns.
+ * Use `void HK::SetP(...)` to set the step size.
+ * Use `void HK::SetThreshold(...)` to set the threshold.

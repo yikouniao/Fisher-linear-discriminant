@@ -39,3 +39,12 @@
 !/perception/*.cpp
 !/perception/*.h
 !/perception/*.hpp
+
+# include /h-k
+!/h-k
+
+# include source file in /h-k
+!/h-k/*.c
+!/h-k/*.cpp
+!/h-k/*.h
+!/h-k/*.hpp

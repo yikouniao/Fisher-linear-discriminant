@@ -11,7 +11,8 @@ int main(int argc, char** argv)
     return -1;
   }
   SamFisher(argv[1], argv[2]);
-  SamPercp(argv[3], argv[4]);
+  //SamPercp(argv[3], argv[4]);
+  SamHK(argv[5], argv[6]);
   waitKey(0);
   return 0;
 }

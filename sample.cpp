@@ -2,6 +2,7 @@
 #include "pic.h"
 #include "Fisher/Fisher.h"
 #include "perception/perception-dat.h"
+#include "h-k/H-K.h"
 
 void SamFisher(char* f_train, char* f_test) {
   using namespace Fisher;
@@ -35,4 +36,23 @@ void SamPercp(char* f_train, char* f_test) {
   perception.Test(result);
   Dat2Pic(result, "perception result");
   perception.ErrRate(test, result);
+}
+
+void SamHK(char* f_train, char* f_test) {
+  using namespace HK;
+  DatSet train;
+  InitDatSet(train, f_train);
+  Dat2Pic(train, "HK train");
+  D_F hk;
+  hk.SetP(1);
+  hk.SetThreshold(0.1);
+  hk.Train(train);
+  hk.Out();
+  DatSet test;
+  InitDatSet(test, f_test);
+  Dat2Pic(test, "HK test");
+  DatSet result = test;
+  hk.Test(result);
+  Dat2Pic(result, "HK result");
+  hk.ErrRate(test, result);
 }
